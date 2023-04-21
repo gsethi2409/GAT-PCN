@@ -160,7 +160,7 @@ To run without occlusion: python3 train_model.py --type 'point'
 
 ```
 
-# EVAL_MODEl.PY and R2N2_CUSTOM.PY
+# EVAL_MODEL.PY and R2N2_CUSTOM.PY
 
 Make sure to use the same occulusion size and type in eval.py.
 
@@ -188,7 +188,7 @@ To run: eval_model.py --type 'point' --load_checkpoint --add_occlusion
         # for i in range(0,args.batch_size):
         #     plt.imsave(f'./training_images/{step}_{i}.png', images_gt[i].squeeze().detach().cpu().numpy())
 ```
-3. The dataset has been shuffled in train_md=odel.py and eval_model.py so that images from each category are present instead of being sequential 
+3. The dataset has been shuffled in train_model.py and eval_model.py so that images from each category are present instead of being sequential 
    
 ```python
     r2n2_dataset = torch.utils.data.Subset(r2n2_dataset, torch.randperm(len(r2n2_dataset))) 
