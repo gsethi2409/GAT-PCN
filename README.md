@@ -176,7 +176,7 @@ r2n2_dataset = R2N2("test", dataset_location.SHAPENET_PATH, dataset_location.R2N
 
 ```python
 
-To run: eval_model.py --type 'point' --load_checkpoint
+To run: eval_model.py --type 'point' --load_checkpoint --add_occlusion
 
 ```
 
