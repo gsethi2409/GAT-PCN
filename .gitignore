@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+r2n2_shapenet_dataset
+training_images
+checkpoints

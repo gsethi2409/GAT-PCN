@@ -12,12 +12,14 @@ import mcubes
 import utils_vox
 import matplotlib.pyplot as plt 
 from utils_viz import visualize_meshes, visualize_point_clouds
+from pdb import set_trace as bp
+import numpy as np
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Singleto3D', add_help=False)
     parser.add_argument('--arch', default='resnet18', type=str)
     parser.add_argument('--max_iter', default=10000, type=str)
-    parser.add_argument('--vis_freq', default=50, type=str)
+    parser.add_argument('--vis_freq', default=100, type=str)
     parser.add_argument('--batch_size', default=1, type=str)
     parser.add_argument('--num_workers', default=0, type=str)
     parser.add_argument('--type', default='vox', choices=['vox', 'point', 'mesh'], type=str)
@@ -125,7 +127,7 @@ def evaluate_model(args):
     avg_r_score = []
 
     if args.load_checkpoint:
-        checkpoint = torch.load(f'./checkpoints/checkpoint_16_530.pth')
+        checkpoint = torch.load(f'./checkpoints/checkpoint_32_6_416.1093444824219.pth')
         model.load_state_dict(checkpoint['model_state_dict'])
         print(f"Succesfully loaded iter {start_iter}")
         
@@ -149,13 +151,19 @@ def evaluate_model(args):
         metrics = evaluate(predictions, mesh_gt, thresholds, args)
 
         # Saving the predicted 3d structure
-        if (step % args.vis_freq) == 0: # (vis_freq = 100)
+        if (step % args.vis_freq) == 0:
             if args.type == "point":
                 visualize_point_clouds(predictions, "./results/point_pred_%d.gif" % step)
+                print('shape of pred: ', predictions.shape)
+                # id_pred.npy and id_gt.npy
+                # bp()
                 mesh_gt = mesh_gt.to(predictions.device)
-                visualize_meshes(mesh_gt, "./results/point_mesh_gt_%d.gif" % step)
                 gt_points = sample_points_from_meshes(mesh_gt, args.n_points)
-                visualize_point_clouds(gt_points, "./results/point_gt_%d.gif" % step)
+                # visualize_meshes(mesh_gt, "./results/point_mesh_gt_%d.gif" % step)
+                # visualize_point_clouds(gt_points, "./results/point_gt_%d.gif" % step)
+
+                np.save(str(step)+'_pred.npy', predictions.detach().cpu())
+                np.save(str(step)+'_gt.npy', gt_points.detach().cpu())
 
             # Saving ground input image
             plt.imsave(f'results/img_{step}.png', images_gt.squeeze().detach().cpu().numpy())

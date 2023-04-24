@@ -32,9 +32,9 @@ splits["test"] = {}
     # "04530566": "watercraft"
 # }
 
-# categories = ["02933112", "03001627", "04379243", "02958343" , "03636649"]
+categories = ["02933112", "03001627", "04379243", "02958343" , "03636649"]
 
-categories = ["03001627", "02933112", "03636649"]
+# categories = ["03001627", "02933112", "03636649"]
 
 # for category in os.listdir(r2n2_dir): if you want all categories
 
